@@ -9,6 +9,7 @@ documentation = "https://docs.rs/midix_synth"
 readme = "README.md"
 keywords = ["midi", "audio", "synthesizer"]
 categories = ["multimedia::audio", "multimedia"]
+exclude = ["/assets"]
 license = "MIT OR Apache-2.0"
 
 
