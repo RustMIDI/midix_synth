@@ -11,4 +11,11 @@ keywords = ["midi", "audio", "synthesizer"]
 categories = ["multimedia::audio", "multimedia"]
 license = "MIT OR Apache-2.0"
 
+
+[features]
+tracing = ["dep:tracing"]
+
 [dependencies]
+midix = { version = "4.0.0-alpha" }
+bevy_platform = { version = "0.17.0-rc" }
+tracing = {version = "0.1", optional = true }
