@@ -7,7 +7,6 @@ use std::sync::Arc;
 use chorus::*;
 
 mod reverb;
-use midix::prelude::ChannelVoiceMessage;
 use reverb::*;
 
 mod settings;
@@ -24,10 +23,11 @@ pub use loop_mode::*;
 
 mod channel;
 use channel::*;
-use voice::{RegionPair, Voice};
 
 use crate::{prelude::*, utils};
 use bevy_platform::{collections::HashMap, prelude::*};
+use midix::prelude::ChannelVoiceMessage;
+use voice::{RegionPair, Voice};
 
 /// An instance of the SoundFont synthesizer.
 pub struct Synthesizer {
