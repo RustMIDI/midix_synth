@@ -6,6 +6,9 @@ pub mod synthesizer;
 
 pub(crate) mod utils;
 
+#[cfg(test)]
+mod tests;
+
 pub mod prelude {
     pub use crate::{
         soundfont::{instrument::*, preset::*, *},
