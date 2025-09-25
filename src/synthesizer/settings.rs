@@ -13,11 +13,18 @@ pub struct SynthesizerSettings {
     pub enable_reverb_and_chorus: bool,
 }
 
-impl SynthesizerSettings {
-    const DEFAULT_BLOCK_SIZE: usize = 64;
-    const DEFAULT_MAXIMUM_POLYPHONY: usize = 64;
-    const DEFAULT_ENABLE_REVERB_AND_CHORUS: bool = true;
+impl Default for SynthesizerSettings {
+    fn default() -> Self {
+        Self {
+            sample_rate: 44100,
+            block_size: 64,
+            maximum_polyphony: 64,
+            enable_reverb_and_chorus: true,
+        }
+    }
+}
 
+impl SynthesizerSettings {
     /// Initializes a new instance of synthesizer settings.
     ///
     /// # Arguments
@@ -26,9 +33,7 @@ impl SynthesizerSettings {
     pub fn new(sample_rate: i32) -> Self {
         Self {
             sample_rate,
-            block_size: SynthesizerSettings::DEFAULT_BLOCK_SIZE,
-            maximum_polyphony: SynthesizerSettings::DEFAULT_MAXIMUM_POLYPHONY,
-            enable_reverb_and_chorus: SynthesizerSettings::DEFAULT_ENABLE_REVERB_AND_CHORUS,
+            ..Default::default()
         }
     }
 

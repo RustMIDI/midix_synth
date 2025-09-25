@@ -3,8 +3,6 @@
 
 use bevy_platform::prelude::*;
 use std::{io::Read, sync::Arc};
-use tracing::error;
-
 pub mod generator;
 pub mod instrument;
 pub mod preset;
@@ -43,6 +41,17 @@ impl SoundFont {
     ///
     /// * `reader` - The data stream used to load the SoundFont.
     pub fn new<R: Read + ?Sized>(reader: &mut R) -> Result<Self, SoundFontError> {
+        Self::new_inner(reader, false)
+    }
+    pub fn new_enforce_sanity_check<R: Read + ?Sized>(
+        reader: &mut R,
+    ) -> Result<Self, SoundFontError> {
+        Self::new_inner(reader, true)
+    }
+    pub fn new_inner<R: Read + ?Sized>(
+        reader: &mut R,
+        reject_on_sanity_check_failure: bool,
+    ) -> Result<Self, SoundFontError> {
         let chunk_id = BinaryReader::read_four_cc(reader)?;
         if chunk_id != b"RIFF" {
             return Err(SoundFontError::RiffChunkNotFound);
@@ -72,8 +81,12 @@ impl SoundFont {
         };
 
         if let Err(e) = sound_font.sanity_check() {
-            //TODO: need tracing
-            error!("sanity check faile: {e:?}");
+            #[cfg(feature = "tracing")]
+            tracing::warn!("Sanity check failed! {e:?}");
+
+            if reject_on_sanity_check_failure {
+                return Err(e);
+            }
         };
 
         Ok(sound_font)
